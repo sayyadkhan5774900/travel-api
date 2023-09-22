@@ -9,8 +9,6 @@ use App\Models\Travel;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class AdminTourTest extends TestCase
@@ -30,7 +28,7 @@ class AdminTourTest extends TestCase
     {
         $this->seed(RoleSeeder::class);
         $user = User::factory()->create();
-        $user->roles()->attach(Role::where('name','editor')->value('id'));
+        $user->roles()->attach(Role::where('name', 'editor')->value('id'));
         $travel = Travel::factory()->create();
 
         $response = $this->actingAs($user)->postJson('/api/v1/admin/travels/'.$travel->id.'/tours');
@@ -42,21 +40,21 @@ class AdminTourTest extends TestCase
     {
         $this->seed(RoleSeeder::class);
         $user = User::factory()->create();
-        $user->roles()->attach(Role::where('name','admin')->value('id'));
+        $user->roles()->attach(Role::where('name', 'admin')->value('id'));
         $travel = Travel::factory()->create();
 
-        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels/'.$travel->id.'/tours',[
+        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels/'.$travel->id.'/tours', [
             'name' => 'Travel',
         ]);
 
         $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
 
-        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels/'.$travel->id.'/tours',[
-                'name' => 'Toure 12123',
-                'starting_date' => '2023-09-15',
-                'ending_date' => '2023-09-20',
-                'price' => 5454,
-            ]);
+        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels/'.$travel->id.'/tours', [
+            'name' => 'Toure 12123',
+            'starting_date' => '2023-09-15',
+            'ending_date' => '2023-09-20',
+            'price' => 5454,
+        ]);
 
         $response->assertStatus(HttpResponse::HTTP_CREATED);
 
@@ -69,23 +67,23 @@ class AdminTourTest extends TestCase
     {
         $this->seed(RoleSeeder::class);
         $user = User::factory()->create();
-        $user->roles()->attach(Role::where('name','admin')->value('id'));
+        $user->roles()->attach(Role::where('name', 'admin')->value('id'));
 
         $travel = Travel::factory()->create();
 
         $tour = Tour::factory()->create(
             [
-                'travel_id' => $travel->id
+                'travel_id' => $travel->id,
             ]
         );
 
-        $response = $this->actingAs($user)->putJson('/api/v1/admin/tours/'.$tour->id,[
+        $response = $this->actingAs($user)->putJson('/api/v1/admin/tours/'.$tour->id, [
             'name' => 'Travel',
         ]);
 
         $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
 
-        $response = $this->actingAs($user)->putJson('/api/v1/admin/tours/'.$tour->id,[
+        $response = $this->actingAs($user)->putJson('/api/v1/admin/tours/'.$tour->id, [
             'name' => 'Tour 12123 Changed',
             'starting_date' => '2023-09-15',
             'ending_date' => '2023-09-20',

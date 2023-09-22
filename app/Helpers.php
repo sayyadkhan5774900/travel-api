@@ -15,6 +15,7 @@ class Helpers
         if ($carbonDate !== false) {
             // Format the date without the time portion
             $dateWithoutTime = $carbonDate->format('Y-m-d');
+
             return $dateWithoutTime;
         }
 

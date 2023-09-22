@@ -15,8 +15,8 @@ class LoginController extends Controller
     {
         $user = User::where(['email' => $request['email']])->first();
 
-        if (!$user) {
-            return  response()->json('The credentials you provide are incorrect.',422);
+        if (! $user) {
+            return response()->json('The credentials you provide are incorrect.', 422);
         }
 
         $user->tokens()->delete();

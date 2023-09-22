@@ -23,10 +23,10 @@ class TravelRequest extends FormRequest
     {
         return [
             'is_public' => ['boolean'],
-            'slug' => ['required','string'],
-            'name' => ['required','string'],
-            'description' => ['required','string'],
-            'number_of_days' => ['required','integer'],
+            'slug' => ['required', 'string'],
+            'name' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'number_of_days' => ['required', 'integer'],
         ];
     }
 }

@@ -12,7 +12,6 @@ class Tour extends Model
 {
     use HasFactory, HasUuids;
 
-
     protected $fillable = [
         'name',
         'starting_date',
@@ -27,21 +26,17 @@ class Tour extends Model
 
     /**
      * Get the travel that owns the Tour
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function travel(): BelongsTo
     {
         return $this->belongsTo(Travel::class);
     }
 
-
-    public function price() : Attribute {
+    public function price(): Attribute
+    {
         return Attribute::make(
-            get: fn($value) => $value / 100,
-            set: fn($value) => $value * 100
+            get: fn ($value) => $value / 100,
+            set: fn ($value) => $value * 100
         );
     }
-
-
 }

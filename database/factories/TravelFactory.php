@@ -18,9 +18,9 @@ class TravelFactory extends Factory
     {
         return [
             'is_public' => fake()->boolean(),
-            'name'  => fake()->text(20),
-            'description'  => fake()->text(100),
-            'number_of_days' => rand(1,10),
-        ];  
+            'name' => fake()->text(20),
+            'description' => fake()->text(100),
+            'number_of_days' => rand(1, 10),
+        ];
     }
 }

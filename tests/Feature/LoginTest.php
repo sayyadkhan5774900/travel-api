@@ -4,9 +4,7 @@ namespace Tests\Feature;
 
 use App\Helpers\HttpResponse;
 use App\Models\User;
-use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
@@ -17,9 +15,9 @@ class LoginTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->post('/api/v1/login',[
+        $response = $this->post('/api/v1/login', [
             'email' => $user->email,
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $response->assertStatus(HttpResponse::HTTP_OK);
@@ -28,9 +26,9 @@ class LoginTest extends TestCase
 
     public function test_login_returns_422_with_incorrect_credentials(): void
     {
-        $response = $this->post('/api/v1/login',[
+        $response = $this->post('/api/v1/login', [
             'email' => 'ali@gmail.com',
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);

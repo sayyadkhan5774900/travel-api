@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class AdminTravelTest extends TestCase
 {
-
     use RefreshDatabase;
 
     public function test_public_user_can_not_access_admin_travel_create(): void
@@ -26,7 +25,7 @@ class AdminTravelTest extends TestCase
     {
         $this->seed(RoleSeeder::class);
         $user = User::factory()->create();
-        $user->roles()->attach(Role::where('name','editor')->value('id'));
+        $user->roles()->attach(Role::where('name', 'editor')->value('id'));
 
         $response = $this->actingAs($user)->postJson('/api/v1/admin/travels');
 
@@ -37,15 +36,15 @@ class AdminTravelTest extends TestCase
     {
         $this->seed(RoleSeeder::class);
         $user = User::factory()->create();
-        $user->roles()->attach(Role::where('name','admin')->value('id'));
+        $user->roles()->attach(Role::where('name', 'admin')->value('id'));
 
-        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels',[
+        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels', [
             'name' => 'Travel',
         ]);
 
         $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
 
-        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels',[
+        $response = $this->actingAs($user)->postJson('/api/v1/admin/travels', [
             'name' => 'Travel',
             'is_public' => true,
             'slug' => 'travel',
@@ -64,16 +63,16 @@ class AdminTravelTest extends TestCase
     {
         $this->seed(RoleSeeder::class);
         $user = User::factory()->create();
-        $user->roles()->attach(Role::where('name','admin')->value('id'));
+        $user->roles()->attach(Role::where('name', 'admin')->value('id'));
         $travel = Travel::factory()->create();
 
-        $response = $this->actingAs($user)->putJson('/api/v1/admin/travels/'.$travel->id,[
+        $response = $this->actingAs($user)->putJson('/api/v1/admin/travels/'.$travel->id, [
             'name' => 'Travel',
         ]);
 
         $response->assertStatus(HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
 
-        $response = $this->actingAs($user)->putJson('/api/v1/admin/travels/'.$travel->id,[
+        $response = $this->actingAs($user)->putJson('/api/v1/admin/travels/'.$travel->id, [
             'name' => 'Travel Changed',
             'is_public' => true,
             'slug' => 'travel',
@@ -87,5 +86,4 @@ class AdminTravelTest extends TestCase
         $response->assertJsonFragment(['name' => 'Travel Changed']);
 
     }
-
 }

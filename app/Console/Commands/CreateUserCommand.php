@@ -34,12 +34,13 @@ class CreateUserCommand extends Command
         $user['name'] = $this->ask('Enter a name');
         $user['email'] = $this->ask('Enter an email');
         $user['password'] = $this->ask('Enter a password');
-        $role = $this->choice('Select a Role', ['Admin','Editor']);
+        $role = $this->choice('Select a Role', ['Admin', 'Editor']);
 
         $role = Role::where('name', $role)->first();
 
-        if(!$role){
+        if (! $role) {
             $this->error('Role not found');
+
             return -1;
         }
 
@@ -53,10 +54,11 @@ class CreateUserCommand extends Command
             foreach ($validator->errors()->all() as $error) {
                 $this->error($error);
             }
+
             return -1;
         }
 
-        DB::transaction(function () use($user, $role){
+        DB::transaction(function () use ($user, $role) {
             $user['password'] = Hash::make($user['password']);
             $user['email_verified_at'] = now();
             $newUser = User::create($user);
