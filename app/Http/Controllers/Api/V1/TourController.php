@@ -1,6 +1,6 @@
 <?php
 
-namespace App\V1;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Helpers;
 use App\Http\Controllers\Controller;
@@ -10,9 +10,9 @@ use App\Models\Travel;
 
 class TourController extends Controller
 {
-    
+
     public function index(Travel $travel, TourListRequest $request)
-    {        
+    {
         $tours = $travel->tours()
         ->when($request->priceFrom , function ($query) use ($request) {
             return $query->where('price', '>=', $request->priceFrom * 100);
@@ -31,7 +31,7 @@ class TourController extends Controller
         })
         ->orderBy('starting_date')
         ->paginate();
-    
+
         return TourResource::collection($tours);
     }
 }
