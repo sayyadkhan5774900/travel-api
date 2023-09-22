@@ -5,6 +5,11 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin \App\Models\Travel
+ *
+ * @property-read int $number_of_nights
+ */
 class TravelResource extends JsonResource
 {
     /**
